@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int curr,vector<vector<int>> &edges,vector<bool> &vis, int cnt,vector<int> &cmp){
+  vis[curr]=true;
+  cmp[curr]=cnt;
+  for(auto &e:edges[curr]){
+    if(!vis[e]){
+    dfs(e,edges,vis,cnt,cmp);
+    }
+  }
+}
+int main() 
+{
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> edges(n);
+    for(int i = 0; i < m;i++){
+      int u,v;cin>>u>>v;
+      edges[u].push_back(v);
+      edges[v].push_back(u);
+    }
+    vector<bool> vis(n,false);
+    int count = 0;
+    vector<int> cmp(n,-1);
+    for(int i = 0 ; i < n;i++){
+      if(!vis[i]){
+        dfs(i,edges,vis,count,cmp);
+        count++;
+      }
+    }
+    for(auto &it:cmp){
+      cout << it << " ";
+    }
+}
